@@ -8,7 +8,7 @@ const SignIn = () => {
 
     const loginUser = async (e)=>{
         e.preventDefault();
-        const response = await fetch("http://127.0.0.1:12112/user/login/",{
+        const response = await fetch("https://file-upload-app-ef9c62156924.herokuapp.com/user/login/",{
             method:"POST",
             headers:{
                 "Content-Type":"application/json",

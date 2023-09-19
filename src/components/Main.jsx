@@ -22,7 +22,7 @@ const Main = () => {
       };
 
     const get_document_list = async () =>{
-        const response = await fetch('http://127.0.0.1:12112/document/list/', {
+        const response = await fetch('https://file-upload-app-ef9c62156924.herokuapp.com/document/list/', {
             method: 'GET',
             headers: {
 				'Authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -45,7 +45,7 @@ const Main = () => {
         formData.append('document', file);
     
         try {
-          const response = await fetch('http://127.0.0.1:12112/upload/document/', {
+          const response = await fetch('https://file-upload-app-ef9c62156924.herokuapp.com/upload/document/', {
             method: 'POST',
             headers: {
 				'Authorization': `Bearer ${localStorage.getItem('token')}`,

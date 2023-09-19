@@ -14,7 +14,7 @@ const SignUp = () => {
         if(password !== cnfPassword){
             alert('Password does not match')
         }
-        const response = await fetch("http://127.0.0.1:12112/user/register/",{
+        const response = await fetch("https://file-upload-app-ef9c62156924.herokuapp.com/user/register/",{
             method:"POST",
             headers:{
                 "Content-Type":"application/json",
