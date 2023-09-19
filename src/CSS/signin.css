@@ -1,0 +1,118 @@
+*{
+    margin: 0;
+}
+
+body{
+    height: 100%;
+    width: 100%;
+    /*
+    background-image: url("../../public/loginBackgorund.png");
+    padding-top: 150px;
+    height: 100%; 
+    width: 100%;
+    background-attachment:fixed ;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 90%;
+*/
+}
+
+.login-main-container{
+    height: 100%;
+    width: 100%;
+    background-image: url("../../public/backgroud.png");
+    padding-top: 150px;
+    height: 100%; 
+    width: 100%;
+    background-attachment:fixed ;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 90%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+    /* margin-top: 150px; */
+}
+
+.login-container form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login-main-container h1{
+    font-size: 40px;
+    line-height: 18px;
+    letter-spacing: 0.25px;
+    color: #7D8CC4;
+    margin-bottom: 45px;
+}
+
+.login-main-container p{
+    font-size: 15px;
+    line-height: 22px;
+    letter-spacing: 0.25px;
+    color: #000000;
+    opacity: 0.6;
+    margin-bottom: 45px;
+}
+
+.login-container form input{
+    height: 45px;
+    width: 420px;
+    background: #FFFFFF;
+    border: 1px solid #E2E2E2;
+    border-radius: 5px;
+    margin-bottom: 30px;
+    padding-left: 20px;
+}
+
+.login-container form input::placeholder{
+    font-size: 15px;
+    line-height: 18px;
+    /* identical to box height, or 120% */
+    letter-spacing: 0.25px;
+    color: #000000;
+    opacity: 0.4;
+}
+
+.login-container form button{
+    height: 50px;
+    width: 445px;
+    background: #7D8CC4;
+    border-radius: 5px;
+    border: none;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 18px;
+    letter-spacing: 0.25px;
+    color: #FFFFFF;
+    margin-top: 45px;
+    margin-bottom: 40px;
+}
+
+.login-container form button:hover{
+    cursor: pointer;
+    background: #6277c4;
+}
+
+.signup-link:hover{
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.signup-link{
+    text-decoration: none;
+    font-size: 15px;
+    line-height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 0.25px;
+    margin-bottom: 123px;
+    color: #7D8CC4;
+}
