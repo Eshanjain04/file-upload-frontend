@@ -14,7 +14,9 @@ const SignUp = () => {
         if(password !== cnfPassword){
             alert('Password does not match')
         }
-        const response = await fetch("https://file-upload-app-ef9c62156924.herokuapp.com/user/register/",{
+        const url = "https://file-upload-app-ef9c62156924.herokuapp.com/user/register/";
+        // const url = "http://127.0.0.1:5000/user/register/";
+        const response = await fetch(url,{
             method:"POST",
             headers:{
                 "Content-Type":"application/json",
@@ -24,15 +26,13 @@ const SignUp = () => {
         })
 
         const data = await response.json();
-        console.log(data.token);
-
-        if (data.token) {
-			localStorage.setItem('token', data.token)
+        console.log(data);
+        if (data.msg.status !== 'failed') {
 			alert('Account Created')
-			window.location.href = '/'
+			window.location.href = '/signin'
 		}
         else {
-			alert(data.message)
+			alert(data.msg.msg)
 		}
     }
   return (
