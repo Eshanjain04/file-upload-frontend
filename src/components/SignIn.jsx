@@ -21,7 +21,9 @@ const SignIn = () => {
         console.log(data.msg.token);
 
         if (data.msg.token) {
-			localStorage.setItem('token', data.msg.token)
+			localStorage.setItem('token', data.msg.token);
+			localStorage.setItem('user_name', data.msg.user.user_name)
+
 			alert(`Welcome ${data.msg.user.user_name}`)
 			window.location.href = '/'
 		} else {
