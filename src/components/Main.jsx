@@ -13,12 +13,25 @@ const Main = () => {
       };
 
     const [file, setFile] = useState(null);
-    const [document, setDocument] = useState('');
+    const [document, setDocument] = useState({});
+    const [documentList, setDocumentList] = useState([]);
 
     const handleFileChange = (e) => {
         const selectedFile = e.target.files[0];
         setFile(selectedFile);
       };
+
+    const get_document_list = async () =>{
+        const response = await fetch('http://127.0.0.1:12112/document/list/', {
+            method: 'GET',
+            headers: {
+				'Authorization': `Bearer ${localStorage.getItem('token')}`,
+			},
+          });
+          const data = await response.json();
+          setDocumentList([...data.msg.items]);
+
+    }
 
       const handleSubmit = async (e) => {
         e.preventDefault();
@@ -41,8 +54,8 @@ const Main = () => {
           });
           const data = await response.json();
           if (data && data.msg && data.msg.document) {
-            console.log(data.msg.document.file);
-            setDocument(data.msg.document.file)
+            console.log(data.msg.document);
+            setDocument(data.msg.document)
           } else {
             alert('File upload failed.');
           }
@@ -63,7 +76,9 @@ const Main = () => {
         }else{
           navigate("/signin")
         }
-      }, [])
+
+        get_document_list();
+      }, [document])
     return(
         <div className='main-container'>
             <Header onLogout={handleLogout}/>
@@ -84,9 +99,21 @@ const Main = () => {
                     <h3>Uploaded File:</h3>
                     <p>File Name: {file.name}</p>
                     <p>File Size: {file.size} bytes</p>
-                    <p>Downloadable Link: <a href={document}>{document}</a></p>
+                    <p>Downloadable Link: <a href={document.file}>{document.short_url}</a></p>
                     </div>
                 )}
+                <h3>History</h3>
+                <div className="file-upload-container">
+                    <ul className="link-list">
+                    {documentList.map(item=>(
+                        <li key={item.id}>
+                            <p><a href={item.file_path}>{item.short_url}</a> - {item.file_name}</p>
+                        </li>
+                    ))}
+                    </ul>
+                </div>
+
+
         </div>
     )
 
