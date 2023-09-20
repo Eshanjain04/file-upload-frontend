@@ -103,6 +103,7 @@ const Main = () => {
             <Header onLogout={handleLogout}/>
             <div className="file-upload-container">
                 <h2 className="upload-header">Upload a File</h2>
+                <h4 className="upload-header">{'Allowed File Types : PDF,JPEG,PNG,TXT,HTML'}</h4>
                 <form onSubmit={handleSubmit}>
                     <label htmlFor="file-input" className="custom-file-upload">
                     <input type="file" id="file-input" onChange={handleFileChange} />
