@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import "../CSS/signup.css";
+import { Link } from 'react-router-dom';
 
 const SignUp = () => {
     const[first_name ,setFirstName] = useState("");
@@ -49,7 +50,10 @@ const SignUp = () => {
 
                 <button className='signup-btn' onClick={loginUser}>Sign Up</button>
             </form>
+             <Link className='signup-link' to="/signin">Click here to Sign in</Link>
+
         </div>
+
     </div>
   )
 }

@@ -15,10 +15,20 @@ const Main = () => {
     const [file, setFile] = useState(null);
     const [document, setDocument] = useState({});
     const [documentList, setDocumentList] = useState([]);
+    const [uploaded, setuploaded] = useState(false);
+    const [uploadedSuccess, setuploadedSuccess] = useState(false);
 
     const handleFileChange = (e) => {
         const selectedFile = e.target.files[0];
-        setFile(selectedFile);
+        if (selectedFile) {
+            if (isValidFileType(selectedFile)) {
+                setFile(selectedFile);
+                setDocument({})
+            } else {
+              alert('Invalid file type. Please select a valid file.');
+            }
+          }
+        
       };
 
     const get_document_list = async () =>{
@@ -45,6 +55,7 @@ const Main = () => {
         formData.append('document', file);
     
         try {
+            setuploaded(true);
           const response = await fetch('https://file-upload-app-ef9c62156924.herokuapp.com/upload/document/', {
             method: 'POST',
             headers: {
@@ -54,13 +65,23 @@ const Main = () => {
           });
           const data = await response.json();
           if (data && data.msg && data.msg.document) {
-            setDocument(data.msg.document)
+            setDocument(data.msg.document);
+            setuploaded(false);
+            setuploadedSuccess(true);
+            setTimeout(()=>{
+                setuploadedSuccess(false);
+            },2000)
           } else {
             alert('File upload failed.');
           }
         } catch (error) {
           alert('An error occurred while uploading the file.');
         }
+      };
+      
+      const isValidFileType = (file) => {
+        const allowedTypes = ['image/jpeg', 'image/png', 'application/pdf', 'text/plain']; // Add allowed file types
+        return allowedTypes.includes(file.type);
       };
 
     useEffect(() => {
@@ -87,11 +108,13 @@ const Main = () => {
                     <input type="file" id="file-input" onChange={handleFileChange} />
                     Select File
                     </label>
-                    <button type="submit" className="upload-button">
+                    <button type="submit" className="upload-button" disabled={uploaded}>
                     Upload
                     </button>
                 </form>
                 </div>
+                 <div className='text-line'>{uploaded ? 'Please wait while we upload your file...' : ''}</div>
+                 <div className='text-line'>{uploadedSuccess ? 'File Uploaded Successfully' : ''}</div>
                 {file && (
                     <div className="file-details">
                     <h3>Uploaded File:</h3>

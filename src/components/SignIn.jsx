@@ -39,7 +39,7 @@ const SignIn = () => {
                 <input  onChange={(e)=>setPassword(e.target.value)} type="password" name="password" id="password" placeholder='Password'/>
                 <button onClick={loginUser}>Sign In</button>
             </form>
-            <Link className='signup-link' to="/signup">Sign Up</Link>
+            <Link className='signup-link' to="/signup">Create a new account</Link>
         </div>
     </div>
   )
