@@ -26,7 +26,6 @@ const SignUp = () => {
         })
 
         const data = await response.json();
-        console.log(data);
         if (data.msg.status !== 'failed') {
 			alert('Account Created')
 			window.location.href = '/signin'

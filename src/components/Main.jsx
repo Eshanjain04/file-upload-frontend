@@ -54,13 +54,11 @@ const Main = () => {
           });
           const data = await response.json();
           if (data && data.msg && data.msg.document) {
-            console.log(data.msg.document);
             setDocument(data.msg.document)
           } else {
             alert('File upload failed.');
           }
         } catch (error) {
-          console.error('Error uploading file:', error);
           alert('An error occurred while uploading the file.');
         }
       };
