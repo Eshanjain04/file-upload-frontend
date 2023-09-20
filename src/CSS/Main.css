@@ -76,5 +76,52 @@
     text-align: center;
     margin-top: 10px;
   }
+
+  /* Table.css */
+
+/* Table.css */
+
+.table-container {
+    margin: 20px;
+  }
+  
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  .data-table th,
+  .data-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    border-right: 1px solid #ddd; /* Add right border for cells */
+  }
+  
+  .data-table th {
+    background-color: #3498db;
+    color: white;
+  }
+  
+  .data-table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  .data-table tbody tr:hover {
+    background-color: #e0e0e0;
+  }
+  
+  .data-table tbody tr:last-child td { /* Remove the bottom border for the last row */
+    border-bottom: none;
+  }
+  
+  .data-table tbody td:last-child { /* Remove the right border for the last column */
+    border-right: none;
+  }
+  
+  
   
   

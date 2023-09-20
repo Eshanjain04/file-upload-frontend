@@ -123,15 +123,27 @@ const Main = () => {
                     <p>Downloadable Link: <a href={document.file}>{document.short_url}</a></p>
                     </div>
                 )}
-                <h3>History</h3>
+                
                 <div className="file-upload-container">
-                    <ul className="link-list">
+                    <h3>History</h3>
+                    <div className="table-container">
+                    <table className="data-table">
+                        <thead>
+                        <tr>
+                            <th>File</th>
+                            <th>Link</th>
+                        </tr>
+                        </thead>
                     {documentList.map(item=>(
-                        <li key={item.id}>
-                            <p><a href={item.file_path}>{item.short_url}</a> - {item.file_name}</p>
-                        </li>
+                        <tbody>
+                            <tr key={item.id}>
+                                <td>{item.file_name}</td>
+                                <td><a href={item.file_path}>{item.short_url}</a></td>
+                            </tr>
+                        </tbody>
                     ))}
-                    </ul>
+                </table>
+                </div>
                 </div>
 
 
