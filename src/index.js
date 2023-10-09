@@ -4,9 +4,10 @@ import './index.css';
 import App from './App';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+const baseUrl = 'https://file-upload-app-ef9c62156924.herokuapp.com'
 root.render(
   <React.StrictMode>
-    <App />
+    <App baseUrl={baseUrl} />
   </React.StrictMode>
 );
 

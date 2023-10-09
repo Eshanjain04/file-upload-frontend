@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import "../CSS/signup.css";
 import { Link } from 'react-router-dom';
 
-const SignUp = () => {
+const SignUp = ({baseUrl}) => {
     const[first_name ,setFirstName] = useState("");
     const[last_name ,setLastName] = useState("");
     const[user_name ,setUserName] = useState("");
@@ -15,8 +15,7 @@ const SignUp = () => {
         if(password !== cnfPassword){
             alert('Password does not match')
         }
-        const url = "https://file-upload-app-ef9c62156924.herokuapp.com/user/register/";
-        // const url = "http://127.0.0.1:5000/user/register/";
+        const url = `${baseUrl}/user/register/`;
         const response = await fetch(url,{
             method:"POST",
             headers:{

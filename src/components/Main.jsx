@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Header from './Header';
 import '../CSS/Main.css';
 
-const Main = () => {
+const Main = ({baseUrl}) => {
     const navigate = useNavigate();
     const handleLogout = () => {
         localStorage.clear();
@@ -32,7 +32,7 @@ const Main = () => {
       };
 
     const get_document_list = async () =>{
-        const response = await fetch('https://file-upload-app-ef9c62156924.herokuapp.com/document/list/', {
+        const response = await fetch(`${baseUrl}/document/list/`, {
             method: 'GET',
             headers: {
 				'Authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -56,7 +56,7 @@ const Main = () => {
     
         try {
             setuploaded(true);
-          const response = await fetch('https://file-upload-app-ef9c62156924.herokuapp.com/upload/document/', {
+          const response = await fetch(`${baseUrl}/upload/document/`, {
             method: 'POST',
             headers: {
 				'Authorization': `Bearer ${localStorage.getItem('token')}`,

@@ -4,14 +4,14 @@ import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
 import Main from "./components/Main";
 
-function App() {
+function App({baseUrl}) {
   return (
     <div>
           <BrowserRouter>
               <Routes>
-                <Route path='/' element={<Main/>}/>
-                <Route path='/signin' element={<SignIn/>}/>
-                <Route path='/signup' element={<SignUp/>}/>
+                <Route path='/' element={<Main baseUrl={baseUrl}/>}/>
+                <Route path='/signin' element={<SignIn baseUrl={baseUrl}/>}/>
+                <Route path='/signup' element={<SignUp baseUrl={baseUrl}/>}/>
               </Routes>
           </BrowserRouter>
     </div>

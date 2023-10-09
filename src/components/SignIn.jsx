@@ -2,13 +2,21 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import "../CSS/signin.css";
 
-const SignIn = () => {
+const SignIn = ({baseUrl}) => {
     const[user_name ,setusername] = useState("");
     const[password ,setPassword] = useState("");
+    const test = async () =>{
+        console.log('Call 1');
+        let res = await fetch("https://jsonplaceholder.typicode.com/todos/1")
+        let result = await res.json();
+        console.log(result);
+        console.log('Call 2');
+      }
 
     const loginUser = async (e)=>{
         e.preventDefault();
-        const response = await fetch("https://file-upload-app-ef9c62156924.herokuapp.com/user/login/",{
+        test();
+        const response = await fetch(`${baseUrl}/user/login/`,{
             method:"POST",
             headers:{
                 "Content-Type":"application/json",
