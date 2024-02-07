@@ -17,6 +17,7 @@ const Main = ({baseUrl}) => {
     const [documentList, setDocumentList] = useState([]);
     const [uploaded, setuploaded] = useState(false);
     const [uploadedSuccess, setuploadedSuccess] = useState(false);
+    const [deleted, setdeleted] = useState(false);
     const [deleteSuccess, setdeleteSuccess] = useState(false);
 
     const handleFileChange = (e) => {
@@ -41,10 +42,12 @@ const Main = ({baseUrl}) => {
           });
           const data = await response.json();
           setDocumentList([...data.msg.items]);
+          setdeleteSuccess(false);
 
     }
 
     const handleDelete = async(item)=>{
+      setdeleted(true);
       let item_id = item._id.$oid
       const response = await fetch(`${baseUrl}/document/${item_id}/delete/`, {
         method: 'DELETE',
@@ -54,11 +57,16 @@ const Main = ({baseUrl}) => {
       });
       const data = await response.json();
       if (data['msg'] && data['msg']['status'] && data['msg']['status'] === 'success'){
+        setdeleted(false);
         setdeleteSuccess(true);
+        setTimeout(()=>{
+          setdeleteSuccess(false);
+      },2000)
       }
       else{
         alert('Error occured while deleting file')
       }
+
     }
 
       const handleSubmit = async (e) => {
@@ -107,6 +115,7 @@ const Main = ({baseUrl}) => {
           'application/json',
           'application/csv',
           'application/zip',
+          'application/html',
         ]; // Add allowed file types
         return allowedTypes.includes(file.type);
       };
@@ -147,7 +156,9 @@ const Main = ({baseUrl}) => {
                     <p>Downloadable Link: <a href={document.file}>{document.short_url}</a></p>
                     </div>
                 )}
-                
+                 <div className='text-line'>{deleted ? 'Please wait while we delete your file...' : ''}</div>
+                 <div className='text-line'>{deleteSuccess ? 'File Deleted Successfully' : ''}</div>
+    
                 <div className="file-upload-container">
                     <h3>History</h3>
                     <div className="table-container">
