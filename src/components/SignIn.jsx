@@ -5,17 +5,8 @@ import "../CSS/signin.css";
 const SignIn = ({baseUrl}) => {
     const[user_name ,setusername] = useState("");
     const[password ,setPassword] = useState("");
-    const test = async () =>{
-        console.log('Call 1');
-        let res = await fetch("https://jsonplaceholder.typicode.com/todos/1")
-        let result = await res.json();
-        console.log(result);
-        console.log('Call 2');
-      }
-
     const loginUser = async (e)=>{
         e.preventDefault();
-        test();
         const response = await fetch(`${baseUrl}/user/login/`,{
             method:"POST",
             headers:{
@@ -28,8 +19,8 @@ const SignIn = ({baseUrl}) => {
         const data = await response.json();
 
         if (data.msg.token) {
-			localStorage.setItem('token', data.msg.token);
-			localStorage.setItem('user_name', data.msg.user.user_name)
+			sessionStorage.setItem('token', data.msg.token);
+			sessionStorage.setItem('user_name', data.msg.user.user_name)
 
 			alert(`Welcome ${data.msg.user.user_name}`)
 			window.location.href = '/'

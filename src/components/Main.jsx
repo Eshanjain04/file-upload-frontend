@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { decodeToken } from "react-jwt";
 import { useNavigate } from 'react-router-dom';
 import Header from './Header';
 import '../CSS/Main.css';
+import { Audio } from 'react-loader-spinner'
 
 const Main = ({baseUrl}) => {
     const navigate = useNavigate();
     const handleLogout = () => {
-        localStorage.clear();
+        sessionStorage.clear();
         navigate("/signin")
         
       };
@@ -17,6 +17,7 @@ const Main = ({baseUrl}) => {
     const [documentList, setDocumentList] = useState([]);
     const [uploaded, setuploaded] = useState(false);
     const [uploadedSuccess, setuploadedSuccess] = useState(false);
+    const [deleteSuccess, setdeleteSuccess] = useState(false);
 
     const handleFileChange = (e) => {
         const selectedFile = e.target.files[0];
@@ -35,12 +36,29 @@ const Main = ({baseUrl}) => {
         const response = await fetch(`${baseUrl}/document/list/`, {
             method: 'GET',
             headers: {
-				'Authorization': `Bearer ${localStorage.getItem('token')}`,
-			},
+				        'Authorization': `Bearer ${sessionStorage.getItem('token')}`,
+			      },
           });
           const data = await response.json();
           setDocumentList([...data.msg.items]);
 
+    }
+
+    const handleDelete = async(item)=>{
+      let item_id = item._id.$oid
+      const response = await fetch(`${baseUrl}/document/${item_id}/delete/`, {
+        method: 'DELETE',
+        headers: {
+            'Authorization': `Bearer ${sessionStorage.getItem('token')}`,
+        },
+      });
+      const data = await response.json();
+      if (data['msg'] && data['msg']['status'] && data['msg']['status'] === 'success'){
+        setdeleteSuccess(true);
+      }
+      else{
+        alert('Error occured while deleting file')
+      }
     }
 
       const handleSubmit = async (e) => {
@@ -59,7 +77,7 @@ const Main = ({baseUrl}) => {
           const response = await fetch(`${baseUrl}/upload/document/`, {
             method: 'POST',
             headers: {
-				'Authorization': `Bearer ${localStorage.getItem('token')}`,
+				'Authorization': `Bearer ${sessionStorage.getItem('token')}`,
 			},
             body: formData,
           });
@@ -67,6 +85,7 @@ const Main = ({baseUrl}) => {
           if (data && data.msg && data.msg.document) {
             setDocument(data.msg.document);
             setuploaded(false);
+            setdeleteSuccess(false);
             setuploadedSuccess(true);
             setTimeout(()=>{
                 setuploadedSuccess(false);
@@ -80,30 +99,34 @@ const Main = ({baseUrl}) => {
       };
       
       const isValidFileType = (file) => {
-        const allowedTypes = ['image/jpeg', 'image/png', 'application/pdf', 'text/plain']; // Add allowed file types
+        const allowedTypes = [
+          'image/jpeg',
+          'image/png',
+          'application/pdf',
+          'text/plain',
+          'application/json',
+          'application/csv',
+          'application/zip',
+        ]; // Add allowed file types
         return allowedTypes.includes(file.type);
       };
 
     useEffect(() => {
-        const token = localStorage.getItem('token')
-        if (token) {
-          const user = decodeToken(token);
-          if (!user) {
-            localStorage.clear();
+        const token = sessionStorage.getItem('token')
+        if (!token) {
+            sessionStorage.clear();
             navigate("/signin")
-          }
         }else{
-          navigate("/signin")
+          get_document_list();
         }
 
-        get_document_list();
-      }, [document])
+      }, [document,deleteSuccess])
     return(
         <div className='main-container'>
             <Header onLogout={handleLogout}/>
             <div className="file-upload-container">
                 <h2 className="upload-header">Upload a File</h2>
-                <h4 className="upload-header">{'Allowed File Types : PDF,JPEG,PNG,TXT,HTML'}</h4>
+                <h4 className="upload-header">{'Allowed File Types : PDF,JPG,JPEG,PNG,TXT,HTML,CSV'}</h4>
                 <form onSubmit={handleSubmit}>
                     <label htmlFor="file-input" className="custom-file-upload">
                     <input type="file" id="file-input" onChange={handleFileChange} />
@@ -133,6 +156,7 @@ const Main = ({baseUrl}) => {
                         <tr>
                             <th>File</th>
                             <th>Link</th>
+                            <th>Actions</th>
                         </tr>
                         </thead>
                     {documentList.map(item=>(
@@ -140,10 +164,11 @@ const Main = ({baseUrl}) => {
                             <tr key={item.id}>
                                 <td>{item.file_name}</td>
                                 <td><a href={item.file_path}>{item.short_url}</a></td>
+                                <td><button type="submit" className="upload-button" onClick={()=>{handleDelete(item)}}>Delete</button></td>
                             </tr>
                         </tbody>
                     ))}
-                </table>
+                    </table>
                 </div>
                 </div>
 
